@@ -25,22 +25,55 @@
 // 	},
 //  };
  
+// export default {
+// 	fetch(request) {
+// 		if(request.url =="https://code-club.alicino-lab.workers.dev/") {
+// 			return new Response('Hello worker!', {
+// 				headers: {
+// 					'content-type': 'text/plain',
+// 				},
+// 			});
+// 		}
+// 		else{
+// 			return new Response('Error Worker!', {
+// 				headers: {
+// 					'content-type': 'text/plain',
+// 				},
+// 			});
+// 		}
+// 	},
+//  };
+ 
 export default {
 	fetch(request) {
-		if(request.url =="https://code-club.alicino-lab.workers.dev/") {
-			return new Response('Hello worker!', {
-				headers: {
-					'content-type': 'text/plain',
-				},
-			});
+	  // Check if the request URL matches
+	  if (request.url === "https://code-club.alicino-lab.workers.dev/") {
+		// Check if the request method is POST
+		if (request.method === "POST") {
+		  // Create a JSON response
+		  const responseBody = { message: "Hello from POST request!" };
+		  const responseInit = {
+			status: 200,
+			headers: {
+			  "content-type": "application/json",
+			},
+		  };
+		  return new Response(JSON.stringify(responseBody), responseInit);
+		} else {
+		  // For other request methods, return the original response
+		  return new Response('Hello worker!', {
+			headers: {
+			  'content-type': 'text/plain',
+			},
+		  });
 		}
-		else{
-			return new Response('Error Worker!', {
-				headers: {
-					'content-type': 'text/plain',
-				},
-			});
-		}
+	  } else {
+		return new Response('Error Worker!', {
+		  headers: {
+			'content-type': 'text/plain',
+		  },
+		});
+	  }
 	},
- };
- 
+  };
+  
